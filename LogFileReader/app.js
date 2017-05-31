@@ -58,6 +58,12 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
+// setup log folders
+app.set('log path', '\\172.25.0.241\OmsLogs')
+
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
+
+    var finder = require('./modules/finder').default;
+    console.log('Finder results: ' + JSON.stringify(finder(), null, 2));
 });
