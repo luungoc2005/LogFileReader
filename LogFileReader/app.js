@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
+var view_csv = require('./routes/view_csv');
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/view_csv', view_csv);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -62,8 +64,5 @@ app.set('port', process.env.PORT || 3000);
 app.set('log path', '\\172.25.0.241\OmsLogs')
 
 var server = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
-
-    var finder = require('./modules/finder').default;
-    console.log('Finder results: ' + JSON.stringify(finder(), null, 2));
+    debug('Express server listening on port ' + server.address().port);    
 });

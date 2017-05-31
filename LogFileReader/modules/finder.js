@@ -1,10 +1,9 @@
 ﻿'use strict';
 var fs = require('fs');
 var path = require('path');
-var reader = require('./csvreader');
 
 var file_pattern = /.csv$/i;
-var log_path = 'C:\\Users\\Mars\\Downloads\\logs\\test\\';
+var log_path = 'C:\\Users\\Mars\\Downloads\\logs\\';
 var file_list = [];
 var max_depth = 100;
 
@@ -18,10 +17,11 @@ function enumerate_all(root_path, pattern, depth = 0) {
             if (file.match(pattern)) {
                 var fileObject = {
                     'filename': file,
+                    'shortname': files[i],
                     'size': fileStat.size,
                     'birthtime': fileStat.birthtime
                 };
-                reader.read(fileObject);
+                //reader.read(fileObject);
                 file_list.push(fileObject);
             }
             else if (fileStat.isDirectory()) {
@@ -37,5 +37,6 @@ function enumerate_files() {
     return file_list;
 }
 
-module.exports.default = enumerate_files
+module.exports.default = enumerate_files;
+module.exports.files = file_list;
 
