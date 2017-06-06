@@ -19,6 +19,12 @@ import {
     getSearchResultFailure 
 } from './actions';
 
+const fetchGetHeaders = new Headers();
+
+const fetchGetInit = { method: 'GET',
+                        headers: fetchGetHeaders,
+                        mode: 'no-cors',
+                        cache: 'default' };
 export function* getFiles() {
     const searchQuery = yield select(makeSearchTextSelector());
     const startDate = yield select(makeStartDateSelector());
@@ -42,7 +48,7 @@ export function* getFiles() {
     const requestURL = `${API_ROOT}view_csv/?${params}`
 
     try {
-        const files = yield call(request, requestURL);
+        const files = yield call(request, requestURL, fetchGetInit);
         yield put(getSearchResultSuccess(files));
     } catch (err) {
         yield put(getSearchResultFailure(err));

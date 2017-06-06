@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Segment, Input } from 'semantic-ui-react';
+import { Grid, Segment, Input, Button } from 'semantic-ui-react';
 import { DateRangePicker } from 'react-dates';
 import { START_DATE, END_DATE } from 'react-dates/constants';
 import momentPropTypes from 'react-moment-proptypes';
@@ -10,6 +10,7 @@ export default class SearchBar extends React.PureComponent {
         onDatesChange: React.PropTypes.func.isRequired,
         onSearchChange: React.PropTypes.func.isRequired,
         onFocusChange: React.PropTypes.func.isRequired,
+        onSubmit: React.PropTypes.func.isRequired,
         startDate: momentPropTypes.momentObj,
         endDate: momentPropTypes.momentObj,
         searchText: React.PropTypes.string,
@@ -17,7 +18,7 @@ export default class SearchBar extends React.PureComponent {
     };
 
     render() {
-        const { onDatesChange, onSearchChange, onFocusChange, startDate, endDate, focusedInput, searchText } = this.props;
+        const { onDatesChange, onSearchChange, onFocusChange, onSubmit, startDate, endDate, focusedInput, searchText } = this.props;
 
         return (
             <Segment>
@@ -34,6 +35,9 @@ export default class SearchBar extends React.PureComponent {
                     </Grid.Column>
                     <Grid.Column mobile={16} tablet={8} computer={8}>
                         <Input className="DateRangePickerInput" size='big' fluid placeholder='Search...' onChange={onSearchChange} value={searchText} />
+                    </Grid.Column>
+                    <Grid.Column mobile={16} tablet={3} computer={3}>
+                        <Button size='big' fluid onClick={onSubmit}>Search</Button>
                     </Grid.Column>
                 </Grid>
             </Segment>

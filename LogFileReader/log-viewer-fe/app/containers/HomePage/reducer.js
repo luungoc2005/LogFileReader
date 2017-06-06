@@ -16,7 +16,7 @@ const initialState = fromJS({
     startDate: moment().subtract(1, 'days'),
     endDate: moment(),
     searchText: '',
-    focusedInput: '',
+    focusedInput: null,
     isLoading: false,
     files: []
 });
@@ -46,7 +46,7 @@ function homePageReducer(state = initialState, action) {
                     .set('isLoading', false)
                     .set('files', action.files)
 
-        case GET_SEARCH_RESULT_SUCCESS:
+        case GET_SEARCH_RESULT_FAILURE:
             return state
                     .set('isLoading', false)
                     .set('error', action.error)

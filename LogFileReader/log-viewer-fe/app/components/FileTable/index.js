@@ -13,7 +13,7 @@ export default class FileTable extends React.PureComponent {
 
         return (
             <Table>
-                <Table.Header>{headers}</Table.Header>
+                <Table.Header><Table.Row>{headers}</Table.Row></Table.Header>
                 <Table.Body>{this.props.content}</Table.Body>
             </Table>
         )
