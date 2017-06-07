@@ -19,12 +19,16 @@ import {
     getSearchResultFailure 
 } from './actions';
 
-const fetchGetHeaders = new Headers();
+let fetchGetHeaders = new Headers();
+
+fetchGetHeaders.append('Content-Type', 'application/json');
+fetchGetHeaders.append('Access-Control-Allow-Origin', '*');
 
 const fetchGetInit = { method: 'GET',
                         headers: fetchGetHeaders,
                         mode: 'no-cors',
                         cache: 'default' };
+
 export function* getFiles() {
     const searchQuery = yield select(makeSearchTextSelector());
     const startDate = yield select(makeStartDateSelector());
@@ -46,16 +50,17 @@ export function* getFiles() {
     ]);
 
     const requestURL = `${API_ROOT}view_csv/?${params}`
-
     try {
         const files = yield call(request, requestURL, fetchGetInit);
+        console.log(requestURL);
         yield put(getSearchResultSuccess(files));
     } catch (err) {
+        console.log(err);
         yield put(getSearchResultFailure(err));
     }
 }
 
-export function* filesData() {
+export function* watchLastGetFiles() {
     const watcher = yield takeLatest(GET_SEARCH_RESULT, getFiles);
 
     yield take(LOCATION_CHANGE);
@@ -63,5 +68,5 @@ export function* filesData() {
 }
 
 export default [
-    filesData,
+    watchLastGetFiles,
 ];
